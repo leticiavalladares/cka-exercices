@@ -1,3 +1,3 @@
 # cka-exercices
 
-YAML workloads
+YAML workloads files
