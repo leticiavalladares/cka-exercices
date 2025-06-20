@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"royal-jelly","namespace":"hive"},"spec":{"replicas":3,"selector":{"matchLabels":{"app":"royal-jelly"}},"template":{"metadata":{"labels":{"app":"royal-jelly"}},"spec":{"containers":[{"image":"nginx:stable","name":"nginx","ports":[{"containerPort":80}]}]}}}}
+  creationTimestamp: "2025-06-20T13:24:18Z"
+  generation: 1
+  name: royal-jelly
+  namespace: hive
+  resourceVersion: "821"
+  uid: 4fca3889-5fc5-4258-8b27-4d97602f186e
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 3
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: royal-jelly
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: royal-jelly
+    spec:
+      containers:
+      - image: nginx:stable
+        imagePullPolicy: IfNotPresent
+        name: nginx
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        resources:
+          requests:
+            memory: 128Mi
+            cpu: 250m
+          limits:
+            memory: 256Mi
+            cpu: 500m
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status:
+  availableReplicas: 3
+  conditions:
+  - lastTransitionTime: "2025-06-20T13:25:05Z"
+    lastUpdateTime: "2025-06-20T13:25:05Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2025-06-20T13:24:18Z"
+    lastUpdateTime: "2025-06-20T13:25:05Z"
+    message: ReplicaSet "royal-jelly-6fbb6c85db" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 1
+  readyReplicas: 3
+  replicas: 3
+  updatedReplicas: 3
