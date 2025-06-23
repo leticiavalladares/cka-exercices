@@ -28,7 +28,7 @@ jobs:
 
       - name: Test /health endpoint
         run: |
-          sleep 3
+          sleep 10
           RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/health)
           if [ "$RESPONSE" -ne 200 ]; then
             echo "FAILED: Status $RESPONSE"
