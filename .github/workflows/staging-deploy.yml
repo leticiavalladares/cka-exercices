@@ -31,8 +31,8 @@ jobs:
 
       - name: Cleanup test container
         if: always()
-        run: make cleanup      
- 
+        run: make cleanup  
+
 
       - name: Deploy to staging with Docker Compose
         run: make up

@@ -1,4 +1,4 @@
-.PHONY: up down test cleanup
+.PHONY: up down test cleanup unittest
 
 up:
 	docker compose --profile staging pull && \
@@ -20,3 +20,7 @@ test:
 cleanup:
 	docker stop my-app && \
 	docker rm my-app
+
+unittest:
+	docker build -t my-app:test . && \
+	docker run --rm my-app:test pytest
