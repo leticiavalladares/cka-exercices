@@ -27,7 +27,12 @@ jobs:
           file: test/http_app/Dockerfile
 
       - name: Test container
-        run: make test       
+        run: make test
+
+      - name: Cleanup test container
+        if: always()
+        run: make cleanup      
+ 
 
       - name: Deploy to staging with Docker Compose
         run: make up
