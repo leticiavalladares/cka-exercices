@@ -1,0 +1,42 @@
+name: Build, Push, and Deploy to Staging
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to local registry
+        run: echo | docker login localhost:5000 --username dummy --password dummy
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: localhost:5000/my-app:latest
+
+      - name: Test /health endpoint
+        run: |
+          sleep 3
+          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/health)
+          if [ "$RESPONSE" -ne 200 ]; then
+            echo "FAILED: Status $RESPONSE"
+            exit 1
+          else
+            echo "OK"
+          fi
+
+      - name: Deploy to staging with Docker Compose
+        run: |
+          docker compose --profile staging pull
+          docker compose --profile staging up -d
