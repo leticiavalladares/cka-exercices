@@ -1,10 +1,20 @@
 .PHONY: up down test
 
 up:
-    docker-compose up -d
+    docker compose --profile staging pull
+    docker compose --profile staging up -d
 
 down:
-    docker-compose down
+    docker compose --profile staging down -d
 
 test:
-    curl -f http://localhost:8080/health || (echo "Health check failed" && exit 1)
+	docker run -d -p 8080:8080 --name my-app leticiavalladares/test:latest
+	sleep 5 && STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/health)
+	if [ "$STATUS" -eq 200 ]; then
+	  echo "OK"
+	else
+	  echo "Failed with status $STATUS"
+	  exit 1
+	fi
+	docker stop my-app
+	docker rm my-app  
