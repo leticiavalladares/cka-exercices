@@ -26,16 +26,26 @@ jobs:
           tags: leticiavalladares/test:latest
           file: test/docker/Dockerfile
 
-      - name: Test /health endpoint
+      - name: Run container for testing
         run: |
-          sleep 10
-          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/health)
-          if [ "$RESPONSE" -ne 200 ]; then
-            echo "FAILED: Status $RESPONSE"
-            exit 1
-          else
+          docker run -d -p 8080:8080 --name my-app leticiavalladares/test:latest
+          sleep 5
+
+      - name: Test app health
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/health)
+          if [ "$STATUS" -eq 200 ]; then
             echo "OK"
+          else
+            echo "Failed with status $STATUS"
+            exit 1
           fi
+
+      - name: Cleanup test container
+        if: always()
+        run: |
+          docker stop test-app
+          docker rm test-app          
 
       - name: Deploy to staging with Docker Compose
         run: |
