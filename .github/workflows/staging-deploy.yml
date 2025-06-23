@@ -44,8 +44,8 @@ jobs:
       - name: Cleanup test container
         if: always()
         run: |
-          docker stop test-app
-          docker rm test-app          
+          docker stop my-app
+          docker rm my-app          
 
       - name: Deploy to staging with Docker Compose
         run: |
