@@ -20,7 +20,7 @@ services:
   prometheus:
     image: prom/prometheus
     volumes:
-      - ./testhttp_app/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./test/http_app/prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
       - "9090:9090"
 
