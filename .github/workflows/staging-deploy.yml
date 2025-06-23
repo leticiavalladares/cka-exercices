@@ -24,7 +24,7 @@ jobs:
           context: .
           push: true
           tags: leticiavalladares/test:latest
-          file: test/docker/Dockerfile
+          file: test/http_app/Dockerfile
 
       - name: Run container for testing
         run: |
