@@ -1,7 +1,7 @@
 FROM python:3.11-slim
-WORKDIR /test/app
+WORKDIR /app
 
-COPY app.py .
+COPY app/app.py ./app/
 RUN pip install flask
 EXPOSE 8080
-CMD ["python", "app.py"]
+CMD ["python", "app/app.py"]
