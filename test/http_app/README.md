@@ -1,1 +1,0 @@
-This is an HTTP app using Flask web framework in Python that returns "OK" on the health endpoint, using a Dockerfile and a docker-compose.yml. Between `node-exporter` and `cadvisor`, I preferred to use `node-exporter` since it's a streamlined solution.
