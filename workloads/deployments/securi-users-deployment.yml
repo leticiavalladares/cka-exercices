@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: securi-users-dep
+  namespace: securicorp-gateway
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: securi-users
+  template:
+    metadata:
+      labels:
+        app: securi-users
+    spec:
+      containers:
+      - name: users
+        image: securicorp/users:0.0.1
+        ports:
+        - containerPort: 80
+        securityContext:
+#          privileged: true

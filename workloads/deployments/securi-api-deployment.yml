@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: securi-api-dep
+  namespace: securicorp-gateway
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: securi-api
+  template:
+    metadata:
+      labels:
+        app: securi-api
+    spec:
+      containers:
+      - name: securi-api
+        image: securicorp/securi-api:0.0.1 #latest
+        ports:
+        - containerPort: 80
