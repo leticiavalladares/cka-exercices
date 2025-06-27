@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: chewbacca
+  namespace: kashyyyk
+  annotations:
+    container.apparmor.security.beta.kubernetes.io/busybox: localhost/k8s-deny-write
+spec:
+  containers:
+  - name: busybox
+    image: busybox:1.33.1
+    command: ['sh', '-c', 'while true; do echo hunter2 > password.txt; sleep 5; done']
