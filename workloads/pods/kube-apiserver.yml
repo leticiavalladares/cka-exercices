@@ -14,6 +14,10 @@ spec:
   - command:
     - kube-apiserver
     - --profiling=false
+    - --audit-policy-file=/etc/kubernetes/audit-policy.yaml
+    - --audit-log-path=/var/log/kubernetes/k8s-audit.log
+    - --audit-log-maxage=60
+    - --audit-log-maxbackup=1
     - --advertise-address=10.0.1.101
     - --allow-privileged=true
     - --authorization-mode=Node,RBAC
