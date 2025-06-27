@@ -1,0 +1,5 @@
+- rule: spawned_process_in_nginx_container
+  desc: A process was spawned in the Nginx container.
+  condition: container.name = "nginx" and evt.type = execve
+  output: "%evt.time,%proc.name,%user.uid,%container.id,%container.name,%container.image"
+  priority: WARNING

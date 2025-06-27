@@ -1,0 +1,4 @@
+- list: my_commands
+  items: [vi, vim, nano] 
+  override:
+    items: replace
