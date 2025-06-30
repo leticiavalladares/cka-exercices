@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "2"
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{"deployment.kubernetes.io/revision":"1"},"generation":1,"name":"terrapin-web-dep","namespace":"default","resourceVersion":"1142","uid":"460957b0-f765-4f68-8a61-5816bc7de965"},"spec":{"progressDeadlineSeconds":600,"replicas":3,"revisionHistoryLimit":10,"selector":{"matchLabels":{"app":"terrapin-web"}},"strategy":{"rollingUpdate":{"maxSurge":"25%","maxUnavailable":"25%"},"type":"RollingUpdate"},"template":{"metadata":{"annotations":{"linkerd.io/inject":"enabled"},"labels":{"app":"terrapin-web"}},"spec":{"containers":[{"image":"nginx:stable","imagePullPolicy":"IfNotPresent","name":"nginx","terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","volumeMounts":[{"mountPath":"/usr/share/nginx/html","name":"html"}]}],"dnsPolicy":"ClusterFirst","restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{},"terminationGracePeriodSeconds":30,"volumes":[{"configMap":{"defaultMode":420,"name":"terrapin-web-html"},"name":"html"}]}}},"status":{"availableReplicas":3,"conditions":[{"message":"Deployment has minimum availability.","reason":"MinimumReplicasAvailable","status":"True","type":"Available"},{"message":"ReplicaSet \"terrapin-web-dep-5ff884f9b7\" has successfully progressed.","reason":"NewReplicaSetAvailable","status":"True","type":"Progressing"}],"observedGeneration":1,"readyReplicas":3,"replicas":3,"updatedReplicas":3}}
+  creationTimestamp: "2025-06-30T13:34:03Z"
+  generation: 2
+  name: terrapin-web-dep
+  namespace: default
+  resourceVersion: "17039"
+  uid: 460957b0-f765-4f68-8a61-5816bc7de965
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 3
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: terrapin-web
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+      creationTimestamp: null
+      labels:
+        app: terrapin-web
+    spec:
+      containers:
+      - image: nginx:stable
+        imagePullPolicy: IfNotPresent
+        name: nginx
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: html
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: terrapin-web-html
+        name: html
+status:
+  availableReplicas: 3
+  conditions:
+  - lastTransitionTime: "2025-06-30T13:34:44Z"
+    lastUpdateTime: "2025-06-30T13:34:44Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2025-06-30T13:34:03Z"
+    lastUpdateTime: "2025-06-30T16:49:34Z"
+    message: ReplicaSet "terrapin-web-dep-5b6cf68cfd" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 2
+  readyReplicas: 3
+  replicas: 3
+  updatedReplicas: 3

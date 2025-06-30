@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "2"
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{"deployment.kubernetes.io/revision":"1"},"generation":1,"name":"terrapin-client-dep","namespace":"default","resourceVersion":"1130","uid":"4734d892-998d-4835-8abc-3dd6469508cf"},"spec":{"progressDeadlineSeconds":600,"replicas":2,"revisionHistoryLimit":10,"selector":{"matchLabels":{"app":"terrapin-client"}},"strategy":{"rollingUpdate":{"maxSurge":"25%","maxUnavailable":"25%"},"type":"RollingUpdate"},"template":{"metadata":{"annotations":{"linkerd.io/inject":"enabled"},"labels":{"app":"terrapin-client"}},"spec":{"containers":[{"command":["sh","-c","while true; do curl -s terrapin-web-svc; sleep 5; done"],"image":"radial/busyboxplus:curl","imagePullPolicy":"IfNotPresent","name":"busybox","terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File"}],"dnsPolicy":"ClusterFirst","restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{},"terminationGracePeriodSeconds":30}}},"status":{"availableReplicas":2,"conditions":[{"message":"Deployment has minimum availability.","reason":"MinimumReplicasAvailable","status":"True","type":"Available"},{"message":"ReplicaSet \"terrapin-client-dep-5bcf555c99\" has successfully progressed.","reason":"NewReplicaSetAvailable","status":"True","type":"Progressing"}],"observedGeneration":1,"readyReplicas":2,"replicas":2,"updatedReplicas":2}}
+  creationTimestamp: "2025-06-30T13:34:04Z"
+  generation: 2
+  name: terrapin-client-dep
+  namespace: default
+  resourceVersion: "16956"
+  uid: 4734d892-998d-4835-8abc-3dd6469508cf
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 2
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: terrapin-client
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+      creationTimestamp: null
+      labels:
+        app: terrapin-client
+    spec:
+      containers:
+      - command:
+        - sh
+        - -c
+        - while true; do curl -s terrapin-web-svc; sleep 5; done
+        image: radial/busyboxplus:curl
+        imagePullPolicy: IfNotPresent
+        name: busybox
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status:
+  availableReplicas: 2
+  conditions:
+  - lastTransitionTime: "2025-06-30T13:34:43Z"
+    lastUpdateTime: "2025-06-30T13:34:43Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2025-06-30T13:34:04Z"
+    lastUpdateTime: "2025-06-30T16:49:27Z"
+    message: ReplicaSet "terrapin-client-dep-666cf6cdfd" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 2
+  readyReplicas: 2
+  replicas: 2
+  updatedReplicas: 2
