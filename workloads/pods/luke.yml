@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: luke
+  namespace: hoth
+spec:
+  serviceAccount: hoth-sa
+  containers:
+  - name: busybox
+    image: busybox:1.33.1
+    command: ['sh', '-c', 'while true; do sleep 5; done']
+    securityContext:
+      privileged: true
