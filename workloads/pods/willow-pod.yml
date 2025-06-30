@@ -1,0 +1,106 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    cni.projectcalico.org/containerID: 6a4fe3559b248238eddf7628ec6ef19c421b2a654373fdeb9e83692d9c8a6e74
+    cni.projectcalico.org/podIP: 192.168.194.69/32
+    cni.projectcalico.org/podIPs: 192.168.194.69/32
+  creationTimestamp: "2025-06-30T07:54:06Z"
+  name: willow
+  namespace: sunnydale
+  resourceVersion: "745"
+  uid: 60764fb0-7ea8-4bcb-b795-0cd97edcdfe3
+spec:
+  containers:
+  - command:
+    - sh
+    - -c
+    - while true; do sleep 5; done
+    image: busybox:1.33.1
+    imagePullPolicy: IfNotPresent
+    name: busybox
+    resources: {}
+    securityContext:
+      readOnlyRootFilesystem: true # immutable since there are no no other special privileges
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-vwqlg
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  nodeName: k8s-worker1
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - name: kube-api-access-vwqlg
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2025-06-30T07:54:07Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2025-06-30T07:54:14Z"
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2025-06-30T07:54:14Z"
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2025-06-30T07:54:06Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: containerd://863476ad5f1fdffe386879d03f31045e35518c321dddd58564983f069bc68204
+    image: docker.io/library/busybox:1.33.1
+    imageID: docker.io/library/busybox@sha256:f7ca5a32c10d51aeda3b4d01c61c6061f497893d7f6628b92f822f7117182a57
+    lastState: {}
+    name: busybox
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2025-06-30T07:54:13Z"
+  hostIP: 10.0.1.102
+  phase: Running
+  podIP: 192.168.194.69
+  podIPs:
+  - ip: 192.168.194.69
+  qosClass: BestEffort
+  startTime: "2025-06-30T07:54:07Z"

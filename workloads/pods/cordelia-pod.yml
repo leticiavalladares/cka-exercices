@@ -1,0 +1,111 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    cni.projectcalico.org/containerID: 1c36275788257b473d88bc9f3f698e4ec898ebb11791eb8706c3c9f62767b849
+    cni.projectcalico.org/podIP: 192.168.194.67/32
+    cni.projectcalico.org/podIPs: 192.168.194.67/32
+  creationTimestamp: "2025-06-30T07:54:06Z"
+  name: cordelia
+  namespace: sunnydale
+  resourceVersion: "734"
+  uid: 6b37a800-0bab-4c32-a933-bbc215b68ece
+spec:
+  containers:
+  - image: nginx:1.19.1
+    imagePullPolicy: IfNotPresent
+    name: nginx
+    resources: {}
+    securityContext:
+      allowPrivilegeEscalation: false   # immutable
+      readOnlyRootFilesystem: true      # immutable
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/cache/nginx
+      name: cache
+    - mountPath: /var/run
+      name: run
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-q29kn
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  nodeName: k8s-worker1
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - emptyDir: {}
+    name: cache
+  - emptyDir: {}
+    name: run
+  - name: kube-api-access-q29kn
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2025-06-30T07:54:06Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2025-06-30T07:54:12Z"
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2025-06-30T07:54:12Z"
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2025-06-30T07:54:06Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: containerd://b70998edd1020546b2df97a158223dd9e4a99cd56ee8ac9285c480923c7643b3
+    image: docker.io/library/nginx:1.19.1
+    imageID: docker.io/library/nginx@sha256:36b74457bccb56fbf8b05f79c85569501b721d4db813b684391d63e02287c0b2
+    lastState: {}
+    name: nginx
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2025-06-30T07:54:11Z"
+  hostIP: 10.0.1.102
+  phase: Running
+  podIP: 192.168.194.67
+  podIPs:
+  - ip: 192.168.194.67
+  qosClass: BestEffort
+  startTime: "2025-06-30T07:54:06Z"
