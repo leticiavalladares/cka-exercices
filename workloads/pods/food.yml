@@ -1,0 +1,131 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    cni.projectcalico.org/containerID: ed9f8fa461f320d5b30dd6395db81278468a2bf35591d6a2fcdb247c6b77ee6c
+    cni.projectcalico.org/podIP: 192.168.194.66/32
+    cni.projectcalico.org/podIPs: 192.168.194.66/32
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"Pod","metadata":{"annotations":{},"name":"food","namespace":"default"},"spec":{"containers":[{"command":["sh","-c","while true; do date \u0026\u0026 echo \"Turtles rule!\"; sleep 5; done"],"image":"busybox:stable","name":"lettuce"},{"command":["sh","-c","while true; do sleep 5; done"],"image":"busybox:stable","name":"strawberries"}]}}
+  creationTimestamp: "2025-06-30T16:13:56Z"
+  name: food
+  namespace: default
+  resourceVersion: "913"
+  uid: b245a6e6-39ef-4831-9877-15e263c922c7
+spec:
+  containers:
+  - command:
+    - sh
+    - -c
+    - while true; do date && echo "Turtles rule!"; sleep 5; done
+    image: busybox:stable
+    imagePullPolicy: IfNotPresent
+    name: lettuce
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-r7spl
+      readOnly: true
+  - command:
+    - sh
+    - -c
+    - while true; do sleep 5; done
+    image: busybox:stable
+    imagePullPolicy: IfNotPresent
+    name: strawberries
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-r7spl
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  nodeName: k8s-worker1
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - name: kube-api-access-r7spl
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2025-06-30T16:14:26Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2025-06-30T16:14:46Z"
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2025-06-30T16:14:46Z"
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2025-06-30T16:14:25Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: containerd://6b44368b74e808ebf600146f35479889f91ca761fb37eadcc311af2109e8b974
+    image: docker.io/library/busybox:stable
+    imageID: docker.io/library/busybox@sha256:7edf5efe6b86dbf01ccc3c76b32a37a8e23b84e6bad81ce8ae8c221fa456fda8
+    lastState: {}
+    name: lettuce
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2025-06-30T16:14:45Z"
+  - containerID: containerd://02b18c4d5c70fc9700a921bc0690f189e2e53524489f4e4e9d4cb5bd70336db1
+    image: docker.io/library/busybox:stable
+    imageID: docker.io/library/busybox@sha256:7edf5efe6b86dbf01ccc3c76b32a37a8e23b84e6bad81ce8ae8c221fa456fda8
+    lastState: {}
+    name: strawberries
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2025-06-30T16:14:46Z"
+  hostIP: 10.0.1.102
+  phase: Running
+  podIP: 192.168.194.66
+  podIPs:
+  - ip: 192.168.194.66
+  qosClass: BestEffort
+  startTime: "2025-06-30T16:14:26Z"
