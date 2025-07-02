@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: plantzone
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: plantzone
+  template:
+    metadata:
+      labels:
+        app: plantzone
+    spec:
+      containers:
+      - name: resource-consumer
+        image: gcr.io/kubernetes-e2e-test-images/resource-consumer:1.5
+        resources:
+          requests:
+            cpu: 50m
