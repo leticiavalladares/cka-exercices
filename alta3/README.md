@@ -29,3 +29,17 @@ Create a PersistentVolume and a PersistentVolumeClaim:
 - Retain reclaim policy
 
 Then create a matching PersistentVolumeClaim (static-pvc-example) to bind to it
+
+4. Deploy a sample workload and configure Horizontal Pod Autoscaling for it. Specifically:
+- Use the existing deployment `cpu-demo`
+- Configure an HPA to scale this deployment from 1 up to 5 replicas when the average CPU utilization exceeds 50%.
+
+5. Only schedule a Pod on the node that has a `disktype=ssd` label.
+
+6. Enforce the Restricted Pod Security Standard on the namespace restricted-ns. Pods in that namespace cannot:
+- have privileged access
+- host networking
+- have any elevated rights
+
+7. On node node-1, add a taint so that no normal pods can schedule there.
+Then schedule a Pod on that node by adding the appropriate toleration to the Pod spec (and ensure it actually lands on node-2).
