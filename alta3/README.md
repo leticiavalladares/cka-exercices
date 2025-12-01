@@ -43,3 +43,7 @@ Then create a matching PersistentVolumeClaim (static-pvc-example) to bind to it
 
 7. On node node-1, add a taint so that no normal pods can schedule there.
 Then schedule a Pod on that node by adding the appropriate toleration to the Pod spec (and ensure it actually lands on node-2).
+
+8. Deploy a StatefulSet named web with 2 replicas using the NGINX image. Each pod should have its own 1Gi persistent volume for /usr/share/nginx/html. Ensure that the StatefulSet pods have stable network identities and persistent storage that remains associated with the ordinal index (even if pods are rescheduled).
+
+Create a Headless Service named web to facilitate stable networking for the StatefulSet.
