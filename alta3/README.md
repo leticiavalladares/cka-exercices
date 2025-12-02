@@ -57,3 +57,10 @@ After configuration, pods in the cluster should be able to resolve `myapp.intern
 11. Use Helm to deploy the Traefik Ingress Controller on the cluster.
 Install it in a dedicated namespace traefik with release name traefik.
 Ensure that Traefik's support for the Kubernetes Gateway API is enabled via Helm values.
+
+12. You have base manifests for an app in /home/student/kustomize/base.
+Use Kustomize to deploy a production variant of this app:
+
+- The production variant should add the label environment: production to all resources.
+- It should prefix resource names with `prod-`
+- It should use Nginx image tag 1.21 instead of the base's 1.19
