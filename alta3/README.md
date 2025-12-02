@@ -47,3 +47,13 @@ Then schedule a Pod on that node by adding the appropriate toleration to the Pod
 8. Deploy a StatefulSet named web with 2 replicas using the NGINX image. Each pod should have its own 1Gi persistent volume for /usr/share/nginx/html. Ensure that the StatefulSet pods have stable network identities and persistent storage that remains associated with the ordinal index (even if pods are rescheduled).
 
 Create a Headless Service named web to facilitate stable networking for the StatefulSet.
+
+9. DNS lookups are failing in the cluster.
+Investigate and repair CoreDNS.
+
+10. Cluster workloads need to resolve a custom domain internally. Configure CoreDNS such that any DNS query for `myapp.internal` returns the IP address `10.10.10.10`.
+After configuration, pods in the cluster should be able to resolve `myapp.internal` to `10.10.10.10`
+
+11. Use Helm to deploy the Traefik Ingress Controller on the cluster.
+Install it in a dedicated namespace traefik with release name traefik.
+Ensure that Traefik's support for the Kubernetes Gateway API is enabled via Helm values.
